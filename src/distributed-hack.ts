@@ -6,7 +6,7 @@ export async function main(ns: NS): Promise<void> {
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
-        buyHacks(ns);
+        //buyHacks(ns);
         getRoot(ns);
         copyAll(ns);
 
@@ -18,6 +18,7 @@ export async function main(ns: NS): Promise<void> {
         }
 
         for (const server of serversWithRoot) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             if (runningActions[server] && ns.isRunning(runningActions[server]!, server)) {
                 continue;
             }

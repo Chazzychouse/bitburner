@@ -10,6 +10,26 @@ export function scanAll(ns: NS, start: string, visited = new Set<string>()): str
     return Array.from(visited);
 }
 
+export interface IServerInfo {
+    server: string;
+    hackability: number;
+    maxMoney: number;
+    growTime: number;
+    weakenTime: number;
+    hackTime: number;
+    minSecurity: number;
+}
+
+export function getServers(ns: NS): IServerInfo[] {
+    const allServers = scanAll(ns, "home");
+    const serversWithRoot = allServers.filter(server => ns.hasRootAccess(server));
+
+    const hackability = serversWithRoot.map(server => determineHackability(ns, server));
+    hackability.sort((a, b) => b.hackability - a.hackability);
+
+    return hackability;
+}
+
 export function bestTarget(ns: NS): string {
     const allServers = scanAll(ns, "home");
     const serversWithRoot = allServers.filter(server => ns.hasRootAccess(server));
@@ -35,7 +55,12 @@ export function determineHackability(ns: NS, server: string) {
 
     return {
         server: server,
-        hackability: hackNum
+        hackability: hackNum,
+        maxMoney: maxMoney,
+        growTime: growTime,
+        weakenTime: weakenTime,
+        hackTime: hackTime,
+        minSecurity: minSecurity,
     };
 }
 
@@ -102,7 +127,7 @@ export function copyAll(ns: NS) {
 }
 
 export function buyHacks(ns: NS) {
-    const programs = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPWorm.exe", "SQLInject.exe"];
+    const programs = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPWorm.exe", "SQLInject.exe", "DeepscanV1.exe", "DeepscanV2.exe", "AutoLink.exe", "Formulas.exe"];
     if (ns.hasTorRouter()) {
         for (const program of programs) {
             if (!ns.fileExists(program, "home") && ns.getServerMoneyAvailable("home") >= ns.singularity.getDarkwebProgramCost(program)) {
