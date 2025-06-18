@@ -100,3 +100,15 @@ export function copyAll(ns: NS) {
         ns.scp(allScripts, server);
     }
 }
+
+export function buyHacks(ns: NS) {
+    const programs = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPWorm.exe", "SQLInject.exe"];
+    if (ns.hasTorRouter()) {
+        for (const program of programs) {
+            if (!ns.fileExists(program, "home") && ns.getServerMoneyAvailable("home") >= ns.singularity.getDarkwebProgramCost(program)) {
+                ns.singularity.purchaseProgram(program);
+                ns.tprint(`Purchased ${program}`);
+            }
+        }
+    }
+}

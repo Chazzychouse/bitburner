@@ -1,11 +1,12 @@
 import { NS } from "@ns";
-import { bestTarget, copyAll, getRoot, scanAll } from "./lib/helpers";
+import { bestTarget, buyHacks, copyAll, getRoot, scanAll } from "./lib/helpers";
 
 export async function main(ns: NS): Promise<void> {
     const runningActions: Record<string, number | null> = {};
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
+        buyHacks(ns);
         getRoot(ns);
         copyAll(ns);
 
