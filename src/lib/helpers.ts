@@ -30,7 +30,7 @@ export function determineHackability(ns: NS, server: string) {
     const maxMoney = ns.getServerMaxMoney(server);
     let hackNum = 0;
     if (ns.getServerRequiredHackingLevel(server) <= ns.getHackingLevel()) {
-        hackNum = maxMoney / minSecurity
+        hackNum = maxMoney / time;
     }
 
     return {
