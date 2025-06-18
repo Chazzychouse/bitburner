@@ -10,7 +10,6 @@ export async function main(ns: NS): Promise<void> {
         copyAll(ns);
 
         const serversWithRoot = scanAll(ns, "home").filter(server => ns.hasRootAccess(server));
-        let actionLog = "";
 
         if (serversWithRoot.length === 0) {
             ns.tprint("No servers with root access found. Please run setup first.");
@@ -55,14 +54,11 @@ export async function main(ns: NS): Promise<void> {
                     isRunning: true,
                     action: `${action} ${target}`
                 };
-                actionLog += `${action} on ${target} started at ${new Date(progress.startedAt).toLocaleTimeString()} and will finish at ${new Date(progress.finishedAt).toLocaleTimeString()}\n`;
                 ns.write("/progress.txt", JSON.stringify(progress) + "\n", "w");
             } else {
                 runningActions[server] = null;
             }
         }
-
-        ns.tprint(`${actionLog}`);
 
         await ns.sleep(1000);
     }
