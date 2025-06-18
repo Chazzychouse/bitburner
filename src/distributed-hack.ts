@@ -10,7 +10,7 @@ export async function main(ns: NS): Promise<void> {
         getRoot(ns);
         copyAll(ns);
 
-        const serversWithRoot = scanAll(ns, "home").filter(server => ns.hasRootAccess(server));
+        const serversWithRoot = scanAll(ns, "home").filter(server => ns.hasRootAccess(server) || server === "home");
 
         if (serversWithRoot.length === 0) {
             ns.tprint("No servers with root access found. Please run setup first.");
