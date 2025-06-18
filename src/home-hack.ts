@@ -6,7 +6,7 @@ export async function main(ns: NS): Promise<void> {
     const server = "home";
     const moneyThreshold = ns.getServerMaxMoney(target) * 0.75;
     const securityThreshold = ns.getServerMinSecurityLevel(target) + 5;
-    const maxThreads = Math.floor(ns.getServerMaxRam(server) / ns.getScriptRam("grow.js")) - 100;
+    const maxThreads = Math.floor(ns.getServerMaxRam(server) / ns.getScriptRam("home-hack.js")) - 20;
 
 
     if (ns.getServerSecurityLevel(target) > securityThreshold) {
